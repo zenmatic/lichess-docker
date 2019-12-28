@@ -8,6 +8,7 @@ Development instructions can be found [here](https://github.com/ornicar/lila/wik
 git clone https://github.com/zenmatic/lichess-docker.git
 cd lichess-docker
 git clone --recursive https://github.com/ornicar/lila.git
+git clone https://github.com/ornicar/lila-ws.git
 docker-compose build
 docker-compose up -d
 ```

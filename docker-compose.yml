@@ -2,6 +2,9 @@ version: '3.7'
 services:
   nginx:
     image: nginx:1.10
+    depends_on:
+    - lichess
+    - lichess-ws
     volumes:
     - ./nginx.conf:/etc/nginx/nginx.conf:ro
     - ./lila/public:/home/lichess/projects/lila/public:ro
@@ -15,13 +18,40 @@ services:
   mongodb:
     image: mongo:3.2
 
+  influxdb:
+    image: influxdb:1.7
+
   lichess:
     build: ./
     image: lichess:matt-1
     stdin_open: true
     tty: true
+    depends_on:
+    - redis
+    - mongodb
     links:
     - redis:redis
     - mongodb:mongodb
     volumes:
     - ./application.conf:/home/lichess/projects/lila/conf/application.conf:ro
+
+  lichess-ws:
+    build:
+      context: ./
+      dockerfile: Dockerfile.lichess-ws
+    image: lichess/ws:matt-1
+    stdin_open: true
+    tty: true
+    depends_on:
+    - redis
+    - mongodb
+    - influxdb
+    links:
+    - redis:redis
+    - mongodb:mongodb
+    - influxdb:influxdb
+    ports:
+    - "8080/tcp"
+    volumes:
+    - ./application-ws.conf:/application.conf:ro
+    command: ["run", "-Dconfig.file=/application.conf"]
