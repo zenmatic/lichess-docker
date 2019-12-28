@@ -23,3 +23,5 @@ services:
     links:
     - redis:redis
     - mongodb:mongodb
+    volumes:
+    - ./application.conf:/home/lichess/projects/lila/conf/application.conf:ro
