@@ -23,7 +23,7 @@ services:
 
   lichess:
     build: ./
-    image: lichess:matt-1
+    image: lichess:1de207
     stdin_open: true
     tty: true
     depends_on:
@@ -39,7 +39,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.lichess-ws
-    image: lichess/ws:matt-1
+    image: lichess/ws:20b2d86
     stdin_open: true
     tty: true
     depends_on:
