@@ -2,6 +2,10 @@
 
 Development instructions can be found [here](https://github.com/ornicar/lila/wiki/Lichess-Development-Onboarding)
 
+## generate (or find) a GeoLite City mmdb file
+
+Instructions [here](util/mmdb/README.md).
+
 ## build and run
 
 ```
