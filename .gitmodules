@@ -1,0 +1,6 @@
+[submodule "lila"]
+	path = lila
+	url = https://github.com/ornicar/lila.git
+[submodule "lila-ws"]
+	path = lila-ws
+	url = https://github.com/ornicar/lila-ws.git
