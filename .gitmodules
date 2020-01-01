@@ -1,0 +1,3 @@
+[submodule "lila"]
+	path = lila
+	url = https://github.com/ornicar/lila.git
