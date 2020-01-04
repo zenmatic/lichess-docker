@@ -20,6 +20,8 @@ services:
 
   influxdb:
     image: influxdb:1.7
+    volumes:
+    - "./influxdb/init.iql:/docker-entrypoint-initdb.d/init.iql:ro"
 
   lichess:
     build: ./
