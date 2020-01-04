@@ -1,0 +1,10 @@
+## build nodejs stuff
+FROM node:10.18-jessie AS node
+RUN yarn global add gulp-cli
+ADD . /home/lichess/projects
+WORKDIR /home/lichess/projects/lila
+RUN ./ui/build
+
+FROM nginx:1.10
+COPY --from=node /home/lichess/projects/lila/public /home/lichess/projects/lila/public
+COPY nginx.conf /etc/nginx/nginx.conf
