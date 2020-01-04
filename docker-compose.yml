@@ -1,13 +1,13 @@
 version: '3.7'
 services:
   nginx:
-    image: nginx:1.10
+    build:
+      context: ./
+      dockerfile: Dockerfile.nginx
+    image: lichess/nginx:1.0
     depends_on:
     - lichess
     - lichess-ws
-    volumes:
-    - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    - ./lila/public:/home/lichess/projects/lila/public:ro
     ports:
     - "80:80/tcp"
     - "443:443/tcp"
