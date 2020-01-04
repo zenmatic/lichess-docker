@@ -5,7 +5,7 @@ RUN cargo install svgcleaner
 ## build nodejs stuff
 FROM node:10.18-jessie AS node
 RUN yarn global add gulp-cli
-ADD lila /home/lichess/projects/lila
+ADD . /home/lichess/projects
 WORKDIR /home/lichess/projects/lila
 RUN ./ui/build
 
