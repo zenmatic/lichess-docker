@@ -1,18 +1,21 @@
-## install svgcleaner via the Rust package manager, Cargo.
-FROM rust:1.37 AS rust
-RUN cargo install svgcleaner
+FROM openjdk:8u212 AS dl
+WORKDIR /tmp
+RUN wget https://piccolo.link/sbt-0.13.18.tgz \
+        && tar zxf sbt-0.13.18.tgz
 
-## build nodejs stuff
-FROM node:10.18-jessie AS node
-RUN yarn global add gulp-cli
-ADD . /home/lichess/projects
-WORKDIR /home/lichess/projects/lila
-RUN ./ui/build
+FROM openjdk:8u212 AS compile
+COPY --from=dl /tmp/sbt /tmp/sbt
+WORKDIR /tmp/sbt
+RUN mkdir -p /root/.ivy2/cache \
+        && cp -a lib/* /root/.ivy2/cache/ \
+        && bin/sbt -batch \
+        && cp -a bin/* /usr/bin/
 
 ## compile the Scala application
-FROM mozilla/sbt:8u212_1.3.4
-COPY --from=rust /usr/local/cargo/bin/svgcleaner /usr/bin/svgcleaner
-COPY --from=node /home/lichess/projects/lila /home/lichess/projects/lila 
+FROM openjdk:8u212
+COPY --from=compile /root/.ivy2 /root/.ivy2
+COPY --from=compile /usr/bin /usr/bin
+COPY lila /home/lichess/projects/lila
 WORKDIR /home/lichess/projects/lila
 RUN ./bin/dev.default compile
 ENTRYPOINT ["./bin/dev.default"]
