@@ -6,6 +6,12 @@ Development instructions can be found [here](https://github.com/ornicar/lila/wik
 
 Instructions [here](util/mmdb/README.md).
 
+## add the following to your /etc/hosts file:
+
+```
+127.0.0.1	localhost www.lichess.local ws.lichess.local assets.lichess.local
+```
+
 ## build and run
 
 ```
