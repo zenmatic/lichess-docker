@@ -1,22 +1,24 @@
-FROM openjdk:8u212 AS dl
-WORKDIR /tmp
-RUN wget https://piccolo.link/sbt-0.13.18.tgz \
-        && tar zxf sbt-0.13.18.tgz
+# This Dockerfile has two required ARGs to determine which base image
+# to use for the JDK and which sbt version to install.
 
-FROM openjdk:8u212 AS compile
-COPY --from=dl /tmp/sbt /tmp/sbt
-WORKDIR /tmp/sbt
-RUN mkdir -p /root/.ivy2/cache \
-        && cp -a lib/* /root/.ivy2/cache/ \
-        && bin/sbt -batch \
-        && cp -a bin/* /usr/bin/
+ARG OPENJDK_TAG=8u212
+FROM openjdk:${OPENJDK_TAG}
 
-## compile the Scala application
-FROM openjdk:8u212
-COPY --from=compile /root/.ivy2 /root/.ivy2
-COPY --from=compile /usr/bin /usr/bin
+ARG SBT_VERSION=1.3.6
+
+# Install sbt
+RUN \
+  curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
+  dpkg -i sbt-$SBT_VERSION.deb && \
+  rm sbt-$SBT_VERSION.deb && \
+  apt-get update && \
+  apt-get install sbt && \
+  sbt sbtVersion
+
 COPY lila /home/lichess/projects/lila
 WORKDIR /home/lichess/projects/lila
-RUN ./bin/dev.default compile
-ENTRYPOINT ["./bin/dev.default"]
+RUN ./lila clean
+RUN ./lila compile 
+RUN ./lila publishLocal
+ENTRYPOINT ["./lila"]
 CMD ["run"]
