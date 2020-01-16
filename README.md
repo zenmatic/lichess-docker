@@ -21,4 +21,4 @@ docker-compose build
 docker-compose up -d
 ```
 
-To view the site, go to http://localhost/about
+To view the site, go to http://www.lichess.local/
