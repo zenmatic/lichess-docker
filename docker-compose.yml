@@ -27,7 +27,7 @@ services:
 
   lichess:
     build: ./
-    image: lichess:970984
+    image: lichess:189d52
     stdin_open: true
     tty: true
     depends_on:
