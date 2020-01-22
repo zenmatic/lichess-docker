@@ -1,0 +1,4 @@
+db.user4.insertMany([
+        { "_id" : "matto", "username" : "matto", "email" : "zen@mat.ic", "bpass" : BinData(0,"qEd63yYcrpIXFcad3hEPK/DUfu7FT88sE1WnRPsVH7gxF1yFVRdt"), "perfs" : {  }, "count" : { "ai" : 0, "draw" : 0, "drawH" : 0, "game" : 0, "loss" : 0, "lossH" : 0, "rated" : 0, "win" : 0, "winH" : 0 }, "enabled" : true, "createdAt" : ISODate("2020-01-19T19:40:19.871Z"), "seenAt" : ISODate("2020-01-19T19:40:19.872Z"), "time" : { "total" : 0, "tv" : 0 }, "len" : 5 },
+        { "_id" : "supermatto", "username" : "supermatto", "email" : "z@enmat.ic", "roles": "ROLE_SUPER_ADMIN", "bpass" : BinData(0,"qEd63yYcrpIXFcad3hEPK/DUfu7FT88sE1WnRPsVH7gxF1yFVRdt"), "perfs" : {  }, "count" : { "ai" : 0, "draw" : 0, "drawH" : 0, "game" : 0, "loss" : 0, "lossH" : 0, "rated" : 0, "win" : 0, "winH" : 0 }, "enabled" : true, "createdAt" : ISODate("2020-01-19T19:40:19.871Z"), "seenAt" : ISODate("2020-01-19T19:40:19.872Z"), "time" : { "total" : 0, "tv" : 0 }, "len" : 5 }
+]);
