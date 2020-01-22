@@ -22,3 +22,8 @@ docker-compose up -d
 ```
 
 To view the site, go to http://www.lichess.local/
+
+## login using the following accounts
+
+matto for a normal user and supermatto for the superuser.  The password is
+this.foobar.is.forever for both.
