@@ -18,7 +18,11 @@ services:
     image: redis:4
 
   mongodb:
-    image: mongo:3.2
+    image: mongo:3.4
+    environment:
+    - MONGO_INITDB_DATABASE=lichess
+    volumes:
+    - "./mongodb/users.js:/docker-entrypoint-initdb.d/users.js:ro"
 
   influxdb:
     image: influxdb:1.7
