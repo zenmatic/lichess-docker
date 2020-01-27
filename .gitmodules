@@ -5,4 +5,4 @@
 [submodule "lila-ws"]
 	path = lila-ws
 	url = https://github.com/ornicar/lila-ws.git
-	commit = 20b2d8638198236bc6be16426444e959c7286958
+	commit = 24515713148e7e12f4a976907af6065fdacf6121
