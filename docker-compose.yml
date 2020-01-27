@@ -29,6 +29,12 @@ services:
     volumes:
     - "./influxdb/init.iql:/docker-entrypoint-initdb.d/init.iql:ro"
 
+  fishnet:
+    image: mklemenz/fishnet
+    links:
+    - nginx:www.lichess.local
+    command: ["-v", "-v", "-v", "--key", "MYAPIKEY", "--auto-update", "--endpoint", "http://www.lichess.local/fishnet/", "run"]
+
   lichess:
     build: ./
     image: lichess:189d52
