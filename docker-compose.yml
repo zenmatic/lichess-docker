@@ -31,7 +31,9 @@ services:
 
   fishnet:
     image: mklemenz/fishnet
-    command: ["--verbose", "--key MY_APIKEY", "--auto-update", "--endpoint http://www.lichess.local/fishnet/"]
+    links:
+    - nginx:www.lichess.local
+    command: ["-v", "-v", "-v", "--key", "MYAPIKEY", "--auto-update", "--endpoint", "http://www.lichess.local/fishnet/", "run"]
 
   lichess:
     build: ./
