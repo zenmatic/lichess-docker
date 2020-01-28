@@ -1,8 +1,8 @@
 [submodule "lila"]
 	path = lila
 	url = https://github.com/ornicar/lila.git
-	commit = 189d52581b29b0c864d458c73a66f0b34cead5f3
+	commit = 264fdd61f44df42253cfc701661a618132d9e45f
 [submodule "lila-ws"]
 	path = lila-ws
 	url = https://github.com/ornicar/lila-ws.git
-	commit = 20b2d8638198236bc6be16426444e959c7286958
+	commit = 24515713148e7e12f4a976907af6065fdacf6121

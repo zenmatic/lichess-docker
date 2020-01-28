@@ -1,4 +1,4 @@
-FROM mozilla/sbt:8u212_1.3.4
+FROM mozilla/sbt:8u232_1.3.7
 ADD lila-ws /home/lichess/projects/lila-ws 
 WORKDIR /home/lichess/projects/lila-ws
 RUN sbt compile
