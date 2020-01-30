@@ -16,6 +16,7 @@ services:
 
   redis:
     image: redis:4
+    command: ["--loglevel", "verbose"]
 
   mongodb:
     image: mongo:3.4
