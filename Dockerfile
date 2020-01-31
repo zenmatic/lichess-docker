@@ -1,4 +1,4 @@
-FROM mozilla/sbt:8u232_1.3.7
+FROM hseeberger/scala-sbt:11.0.6_1.3.7_2.13.1
 COPY lila /home/lichess/projects/lila
 WORKDIR /home/lichess/projects/lila
 RUN ./lila clean
