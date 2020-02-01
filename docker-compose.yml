@@ -19,7 +19,7 @@ services:
     command: ["--loglevel", "verbose"]
 
   mongodb:
-    image: mongo:3.4
+    image: mongo:4.2
     environment:
     - MONGO_INITDB_DATABASE=lichess
     volumes:
