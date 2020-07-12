@@ -12,22 +12,26 @@ Instructions [here](util/mmdb/README.md).
 127.0.0.1	localhost www.lichess.local ws.lichess.local assets.lichess.local
 ```
 
+## checkout code
+
+```
+git clone --recursive https://github.com/zenmatic/lichess-docker.git
+cd lichess-docker
+```
+
 ## build and run
 
 build prerequisite of lichess image:
 inspired by [this](https://raw.githubusercontent.com/hseeberger/scala-sbt/master/debian/Dockerfile)
+
 ```
 docker build \
   --build-arg BASE_IMAGE_TAG="15-slim" \
   --build-arg SBT_VERSION="1.3.7" \
   --build-arg SCALA_VERSION="2.13.1" \
   -t lichess/scala-sbt:15-slim \
-  -f Dockerfile.scala-sbt .
-```
+  -f dockerfiles/Dockerfile.scala-sbt .
 
-```
-git clone --recursive https://github.com/zenmatic/lichess-docker.git
-cd lichess-docker
 docker-compose build
 docker-compose up -d
 ```

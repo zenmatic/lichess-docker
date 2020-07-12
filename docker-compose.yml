@@ -3,7 +3,7 @@ services:
   nginx:
     build:
       context: ./
-      dockerfile: Dockerfile.nginx
+      dockerfile: dockerfiles/Dockerfile.nginx
     image: lichess/nginx:1.0
     depends_on:
     - lichess
@@ -37,7 +37,9 @@ services:
     command: ["-v", "-v", "-v", "--key", "MYAPIKEY", "--auto-update", "--endpoint", "http://www.lichess.local/fishnet/", "run"]
 
   lichess:
-    build: ./
+    build:
+      context: ./
+      dockerfile: dockerfiles/Dockerfile.lichess
     image: lichess:85690c
     stdin_open: true
     tty: true
@@ -54,7 +56,7 @@ services:
   lichess-ws:
     build:
       context: ./
-      dockerfile: Dockerfile.lichess-ws
+      dockerfile: dockerfiles/Dockerfile.lichess-ws
     image: lichess/ws:245157
     stdin_open: true
     tty: true
