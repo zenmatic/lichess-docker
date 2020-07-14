@@ -21,17 +21,11 @@ cd lichess-docker
 
 ## build and run
 
-build prerequisite of lichess image:
+build prerequisite images.  scala-sbt image 
 inspired by [this](https://raw.githubusercontent.com/hseeberger/scala-sbt/master/debian/Dockerfile)
 
 ```
-docker build \
-  --build-arg BASE_IMAGE_TAG="15-slim" \
-  --build-arg SBT_VERSION="1.3.7" \
-  --build-arg SCALA_VERSION="2.13.1" \
-  -t lichess/scala-sbt:15-slim \
-  -f dockerfiles/Dockerfile.scala-sbt .
-
+./build.sh
 docker-compose build
 docker-compose up -d
 ```
