@@ -1,0 +1,6 @@
+## build nodejs stuff
+FROM node:10.18-jessie
+RUN yarn global add gulp-cli
+ADD . /home/lichess/projects
+WORKDIR /home/lichess/projects/lila
+RUN ./ui/build

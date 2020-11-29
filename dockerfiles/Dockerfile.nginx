@@ -1,10 +1,8 @@
-## build nodejs stuff
-FROM node:10.18-jessie AS node
-RUN yarn global add gulp-cli
-ADD . /home/lichess/projects
-WORKDIR /home/lichess/projects/lila
-RUN ./ui/build
-
-FROM nginx:1.10
-COPY --from=node /home/lichess/projects/lila/public /home/lichess/projects/lila/public
+FROM nginx:1.17
+COPY --from=lichess/nginx-node-stage:1.0 /home/lichess/projects/lila/public /home/lichess/projects/lila/public
+# grab curl too
+COPY --from=lichess/nginx-node-stage:1.0 /usr/bin/curl /usr/bin/curl
+COPY --from=lichess/nginx-node-stage:1.0 /usr/lib /usr/lib
+COPY --from=lichess/nginx-node-stage:1.0 /lib /usr/lib
+#
 COPY nginx.conf /etc/nginx/nginx.conf
