@@ -18,7 +18,7 @@ ENV USER_ID ${USER_ID:-1001}
 ARG GROUP_ID 
 ENV GROUP_ID ${GROUP_ID:-1001}
 
-RUN apt-get update && apt-get install -y curl iproute2
+RUN apt-get update && apt-get install -y curl iproute2 netcat
 
 # Install sbt
 RUN \

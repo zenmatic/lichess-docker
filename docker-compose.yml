@@ -6,8 +6,10 @@ services:
       dockerfile: dockerfiles/Dockerfile.nginx
     image: lichess/nginx:1.0
     depends_on:
-    - lichess
-    - lichess-ws
+      lichess:
+        condition: service_healthy
+      lichess-ws:
+        condition: service_healthy
     ports:
     - "80:80/tcp"
     - "443:443/tcp"
@@ -15,20 +17,20 @@ services:
     - "./nginx.conf:/etc/nginx/nginx.conf:ro"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
-      interval: 30s
-      timeout: 10s
+      interval: 5s
+      timeout: 1s
       retries: 3
-      start_period: 10s
+      start_period: 5s
 
   redis:
     image: redis:4
     command: ["--loglevel", "verbose"]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 10s
+      interval: 5s
+      timeout: 1s
       retries: 3
-      start_period: 10s
+      start_period: 5s
 
   mongodb:
     image: mongo:4.2
@@ -37,31 +39,31 @@ services:
     volumes:
     - "./mongodb/users.js:/docker-entrypoint-initdb.d/users.js:ro"
     healthcheck:
-      test: ["CMD-SHELL", "echo", "'db.runCommand(\"ping\").ok'", "|", "mongo", "localhost:27017/test", "--quiet"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD-SHELL", "echo", "'db.runCommand(\"ping\").ok'", "|", "mongo", "localhost:27017/test", "--quiet", "||", "exit", "1"]
+      interval: 10s
+      timeout: 2s
       retries: 3
-      start_period: 120s
+      start_period: 10s
 
   influxdb:
     image: influxdb:1.7
     volumes:
     - "./influxdb/init.iql:/docker-entrypoint-initdb.d/init.iql:ro"
     healthcheck:
-      test: ["CMD", "curl", "-f", "-XGET", "http://localhost:8086/ping"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "curl", "-f", "http://localhost:8086/ping"]
+      interval: 5s
+      timeout: 2s
       retries: 3
       start_period: 10s
 
-  fishnet:
-    image: mklemenz/fishnet
-    depends_on:
-    - nginx
-    - lichess
-    links:
-    - nginx:www.lichess.local
-    command: ["-v", "-v", "-v", "--key", "MYAPIKEY", "--auto-update", "--endpoint", "http://www.lichess.local/fishnet/", "run"]
+#  fishnet:
+#    image: mklemenz/fishnet
+#    depends_on:
+#    - nginx
+#    - lichess
+#    links:
+#    - nginx:www.lichess.local
+#    command: ["-v", "-v", "-v", "--key", "MYAPIKEY", "--auto-update", "--endpoint", "http://www.lichess.local/fishnet/", "run"]
 
   lichess:
     build:
@@ -71,8 +73,10 @@ services:
     stdin_open: true
     tty: true
     depends_on:
-    - redis
-    - mongodb
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
     links:
     - redis:redis
     - mongodb:mongodb
@@ -80,9 +84,9 @@ services:
     - ./application.conf:/home/lichess/projects/lila/conf/application.conf:ro
     - ./GeoLite2-City.mmdb:/home/lichess/projects/lila/data/GeoLite2-City.mmdb:ro
     healthcheck:
-      test: ["CMD-SHELL", "ss", "-nlt", "|", "grep", "-q", "0.0.0.0:9663"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "nc", "-z", "localhost", "9663"]
+      interval: 5s
+      timeout: 2s
       retries: 3
       start_period: 120s
 
@@ -94,9 +98,14 @@ services:
     stdin_open: true
     tty: true
     depends_on:
-    - redis
-    - mongodb
-    - influxdb
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      influxdb:
+        condition: service_healthy
+      lichess:
+        condition: service_healthy
     links:
     - redis:redis
     - mongodb:mongodb
@@ -107,8 +116,8 @@ services:
     - ./application-ws.conf:/override.conf:ro
     command: ["run", "-Dconfig.file=/override.conf"]
     healthcheck:
-      test: ["CMD-SHELL", "ss", "-nlt", "|", "grep", "-q", "0.0.0.0:8080"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "nc", "-z", "localhost", "8080"]
+      interval: 5s
+      timeout: 2s
       retries: 3
       start_period: 120s
